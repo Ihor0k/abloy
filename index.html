@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ABLOY PROTEC decoder</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
+    body {
+      font-family: 'Roboto Mono', monospace;
+      line-height: 1;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: #361d32;
+      background-color: #F1E8E6;
+    }
+
+    .container {
+      background-color: #EDD2CB;
+      padding: 3rem;
+      border-radius: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    h3 {
+      margin: 0 0 1rem;
+      font-size: 3rem;
+    }
+
+    #input {
+      width: 15ch;
+      font: inherit;
+      border: none;
+      margin: 1rem 0;
+      padding: 0;
+      letter-spacing: 0.5ch;
+      background-size: 15ch 2px;
+      background-repeat: no-repeat;
+      background-position: bottom;
+      background-image: repeating-linear-gradient(to right, #543c52 0, #543c52 1ch, transparent 1ch, transparent 1.5ch);
+      background-color: transparent;
+    }
+
+    #input::placeholder {
+      color: #543c52;
+      opacity: 0.5;
+    }
+
+    #input:focus-visible {
+      outline: none;
+    }
+
+    #output {
+      color: #F1190E;
+      width: 15ch;
+      height: 3rem;
+      letter-spacing: 0.5ch;
+    }
+
+  </style>
+</head>
+<body>
+<div class="container">
+  <h3>ABLOY<sup>®</sup> PROTEC decoder</h3>
+  <input id="input" maxlength="10" autofocus autocomplete="off" placeholder="Code" oninput="decode(this.value)">
+  <span id="output"></span>
+</div>
+<script>
+  const chart = [
+    [3, 1, 5, 9, 2, 4, 7],
+    [2, 4, 3, 5, 0, 8, 1],
+    [9, 7, 6, 1, 5, 2, 3],
+    [8, 2, 1, 7, 5, 6, 4],
+    [1, 7, 5, 9, 3, 6, 2],
+    [5, 2, 7, 4, 3, 1, 6],
+    [6, 9, 1, 2, 4, 3, 8],
+    [2, 1, 0, 8, 3, 4, 5],
+    [2, 9, 8, 0, 5, 3, 1],
+    [8, 0, 1, 7, 9, 3, 2]
+  ];
+
+  const output = document.getElementById("output");
+
+  function decode (inputText) {
+    output.textContent =
+      inputText
+        .split("")
+        .map((c, i) => chart[i].indexOf(Number(c)))
+        .map(x => (x < 0) ? "x" : x)
+        .join("");
+  }
+</script>
+
+</body>
+</html>
